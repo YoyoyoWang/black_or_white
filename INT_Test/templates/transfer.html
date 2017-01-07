@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Black or White--Transfer</title>
+	<link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}" type="text/css">
+</head>
+<body>
+	<div id="header">
+		<div>
+			<div class="logo">
+				<a href="/"></a>
+			</div>
+			<ul id="navigation">
+				<li>
+					<a href="/">Home</a>
+				</li>
+				<li class="active">
+					<a href="/transfer">Transfer</a>
+				</li>
+				<li>
+					<a href="/contact">Contact</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div id="contents1">
+		<h1>Upload file</h1>
+		<object class="features" align="left" >
+			
+      		<form action={{url_for('transfer')}} method="post" enctype="multipart/form-data">
+			<input type="file" multiple="" name="file[]" class="span3" />
+        	<input type="submit" value="Upload"  class="span2">
+      		</form>
+
+			
+	
+        {% for file in filenames %}
+		<img src = "{{url_for('uploaded_file', filename=file) }}", style="width: 224px;height:224px" >	
+          <li><a href="{{url_for('uploaded_file', filename=file)}}">{{file}}</a></li>
+        {% endfor %}
+     
+   
+		</object>
+		<!-- ---------------------------------------transfer_button------------------------------------- -->
+		<object class="features" align="center">
+		{% for file in filenames %}
+		{% if not result %}
+		<form action= "{{url_for('transfer_action', filename=file)}}">
+		<button id="transferbutton" class="btn">Transfer</button>		
+		</form>
+		{% endif %}
+		{% endfor %}
+		</object>
+		<!-- ---------------------------------------transfer_output------------------------------------- -->
+		<object class="features" align="right">
+		<br/>
+		<br/>
+		{% for file in filenames %}
+		    {% if result %}
+		  <img src = "{{url_for('downloaded_file', filename=file) }}", style="width: 224px;height:224px" >	
+          <li><a href="{{url_for('downloaded_file', filename=file)}}">{{complete}}</a></li>
+			{% endif %}
+		{% endfor %}   
+		    
+		</object>
+	</div>
+	<div id="footer">
+		<div class="clearfix">
+			<div id="connect">
+				<a href="http://www.facebook.com" target="_blank" class="facebook"></a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
